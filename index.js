@@ -1,5 +1,6 @@
 import express from "express";
 import db from "./App/Database.js";
+import router from "./Routes/index.js";
 const app = express()
 
 try {
@@ -9,4 +10,7 @@ try {
     console.log(error);
 }
 
-app.listen(8080, () => console.log('Server running at port 8080'));
+app.use(express.json());
+app.use('/api/v1', router);
+
+app.listen(5000, () => console.log('Server running at port 5000'));
