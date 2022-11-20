@@ -4,13 +4,19 @@ import jwt, {decode} from "jsonwebtoken";
 
 export const getUser = async(req, res) => {
     try {
-        const users = await Users.findAll({
+        const refreshToken = req.cookies.refreshToken;
+        const users = await Users.findOne({
+            where: {
+                refresh_token: refreshToken
+            },
             attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt']
         });
 
         res.json(users);
     } catch (error) {
-        console.log(error)
+        console.log(error);
+
+        res.status(403).json({msg: "Unauthorized"});
     }
 }
 
