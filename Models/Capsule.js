@@ -14,6 +14,9 @@ const Capsules = db.define('capsules', {
     },
     release_time: {
         type: Sequelize.DATE
+    },
+    is_active: {
+        type: Sequelize.BOOLEAN
     }
 }, {
     freezeTableName: true
