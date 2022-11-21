@@ -1,7 +1,12 @@
 import express from "express";
 import {getUser, login, logout, refreshToken, register} from "../Controllers/UserController.js";
 import {verifyToken} from "../Middleware/VerifyToken.js";
-import {createCapsule, getAllCapsules, getUserCapsules} from "../Controllers/CapsuleController.js";
+import {
+    createCapsule,
+    getAllCapsules,
+    getSpecificTimeCapsule,
+    getUserCapsules
+} from "../Controllers/CapsuleController.js";
 import multer from "multer";
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -24,6 +29,7 @@ router.delete('/logout', logout);
 // Capsule Routes
 router.get('/capsules/my-capsules', verifyToken, getUserCapsules);
 router.get('/capsules/get-all-capsules', verifyToken, getAllCapsules);
+router.get('/capsules/view/:id', verifyToken, getSpecificTimeCapsule);
 router.post('/capsules/create', upload.single('file'), verifyToken, createCapsule);
 
 export default router;

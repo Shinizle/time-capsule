@@ -1,6 +1,7 @@
 import Capsules from "../Models/Capsule.js";
 import jwt from "jsonwebtoken";
 import User from "../Models/User.js";
+import capsule from "../Models/Capsule.js";
 
 export const getUserCapsules = async(req, res) => {
     const user = jwt.decode(req.cookies.refreshToken);
@@ -54,6 +55,29 @@ export const getAllCapsules = async(req, res) => {
         console.log(error);
 
         res.sendStatus(500)
+    }
+}
+
+export const getSpecificTimeCapsule = async(req, res) => {
+    const id = parseInt(req.params.id);
+    try {
+        const capsule = await Capsules.findOne({
+            where: {
+                id: id
+            }
+        });
+
+        var now = new Date();
+        if (capsule.release_time >= now) {
+            res.status(201).json({msg: "This time capsule cannot be opened yet."})
+        } else {
+            res.status(200).json({data: capsule});
+        }
+
+    } catch (error) {
+        console.log(error);
+
+        res.sendStatus(500);
     }
 }
 
