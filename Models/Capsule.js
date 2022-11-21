@@ -3,6 +3,9 @@ import db from "../App/Database.js";
 import Users from "./User.js";
 
 const Capsules = db.define('capsules', {
+    title: {
+        type: Sequelize.STRING
+    },
     message: {
         type: Sequelize.STRING
     },

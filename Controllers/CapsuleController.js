@@ -1,5 +1,6 @@
 import Capsules from "../Models/Capsule.js";
 import jwt from "jsonwebtoken";
+import User from "../Models/User.js";
 
 export const getUserCapsules = async(req, res) => {
     const user = jwt.decode(req.cookies.refreshToken);
@@ -40,7 +41,12 @@ export const getAllCapsules = async(req, res) => {
             where: {
                 is_active: is_active
             },
-            order: [['release_time', req?.body?.sort_release_time ?? 'ASC']]
+            order: [['release_time', req?.body?.sort_release_time ?? 'ASC']],
+            attributes: ['id', 'title', 'release_time', 'is_active', 'createdAt', 'updatedAt'],
+            include: {
+                model: User,
+                attributes:['name', 'email']
+            }
         });
 
         res.status(200).json({data: capsules});
@@ -49,17 +55,5 @@ export const getAllCapsules = async(req, res) => {
 
         res.sendStatus(500)
     }
-}
-
-export const filterCapsules = async(req) => {
-    let filter = null;
-    console.log(req.i)
-    if (req.is_active) {
-        filter = {
-            is_active: req.is_active
-        }
-    }
-
-    return filter;
 }
 
