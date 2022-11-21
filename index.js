@@ -14,6 +14,7 @@ try {
     console.log(error);
 }
 
+app.use('/storage', express.static('storage'));
 app.use(cookieParser());
 app.use(express.json());
 app.use('/api/v1', router);
