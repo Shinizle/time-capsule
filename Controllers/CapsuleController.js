@@ -1,7 +1,6 @@
 import Capsules from "../Models/Capsule.js";
 import jwt from "jsonwebtoken";
 import User from "../Models/User.js";
-import capsule from "../Models/Capsule.js";
 
 export const getUserCapsules = async(req, res) => {
     const user = jwt.decode(req.cookies.refreshToken);
