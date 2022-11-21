@@ -18,6 +18,7 @@ export const createCapsule = async(req, res) => {
     const user = jwt.decode(req.cookies.refreshToken);
     try {
         let capsule = await Capsules.create({
+            title: req.body.title,
             message: req.body.message,
             file: req.file.path,
             user_id: user.userId,
