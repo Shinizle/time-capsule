@@ -26,6 +26,10 @@ export const register = async(req, res) => {
         return res.status(400).json({msg: "The password and confirmation password do not match."});
     }
 
+    if (await Users.findOne({ where: { email: email }})) {
+        return res.status(400).json({msg: "Email is already taken."});
+    }
+
     const salt = await bycript.genSalt();
     const hasPassword = await bycript.hash(password, salt);
 
